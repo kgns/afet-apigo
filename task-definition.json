@@ -1,0 +1,81 @@
+[
+    {
+        "name": "${service_name}",
+        "image": "${image}",
+        "essential": true,
+        "portMappings": [
+            {
+                "name": "service",
+                "appProtocol": "http",
+                "containerPort": 80,
+                "hostPort": 80,
+                "protocol": "tcp"
+            }
+        ],
+        "environment": [],
+        "secrets": [
+            {
+                "name": "DB_HOST",
+                "valueFrom": "${rds_secret_arn}:DB_HOST::"
+            },
+            {
+                "name": "DB_PORT",
+                "valueFrom": "${rds_secret_arn}:DB_PORT::"
+            },
+            {
+                "name": "DB_USER",
+                "valueFrom": "${rds_secret_arn}:DB_USER::"
+            },
+            {
+                "name": "DB_PASS",
+                "valueFrom": "${rds_secret_arn}:DB_PASS::"
+            },
+            {
+                "name": "ApiKey",
+                "valueFrom": "${api_key_secret_arn}"
+            },
+            {
+                "name": "RedisAddr",
+                "valueFrom": "${redis_secret_arn}"
+            },
+            {
+                "name": "ElasticAddr",
+                "valueFrom": "${elastic_secret_arn}"
+            },
+            {
+                "name": "KAFKA_BROKERS",
+                "valueFrom": "${kafka_brokers_secret_arn}"
+            },
+            {
+                "name": "INTENT_RESOLVER_API_URL",
+                "valueFrom": "${intent_resolver_api_secret_arn}:URL::"
+            },
+            {
+                "name": "INTENT_RESOLVER_API_KEY",
+                "valueFrom": "${intent_resolver_api_secret_arn}:KEY::"
+            },
+            {
+                "name": "NEEDS_RESOLVER_API_URL",
+                "valueFrom": "${needs_resolver_api_secret_arn}:URL::"
+            },
+            {
+                "name": "NEEDS_RESOLVER_API_KEY",
+                "valueFrom": "${needs_resolver_api_secret_arn}:KEY::"
+            }
+        ],
+        "mountPoints": [],
+        "volumesFrom": [],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "/ecs/${service_name}",
+                "awslogs-region": "${region}",
+                "awslogs-stream-prefix": "ecs"
+            }
+        },
+        "linuxParameters": {
+            "initProcessEnabled": true
+        }
+    }
+]
