@@ -7,7 +7,6 @@ resource "aws_rds_cluster" "this" {
   cluster_identifier      = "${local.service_name}-cluster"
   engine                  = "aurora-postgresql"
   engine_mode             = "serverless"
-  availability_zones      = data.aws_availability_zones.available.names
   database_name           = "${local.service_name}-db"
   backup_retention_period = 5
   preferred_backup_window = "00:00-02:00"
