@@ -1,5 +1,5 @@
 locals {
-  service_name = "api-go"
+  service_name = "go-api"
 }
 
 data "aws_region" "current" {}
